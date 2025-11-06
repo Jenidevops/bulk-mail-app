@@ -5,14 +5,20 @@ const nodemailer = require("nodemailer");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const path = require("path");
+const fs = require("fs");
 const Email = require("./models/Email");
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Determine the correct path to frontend dist
+const frontendPath = path.join(__dirname, "../frontend/dist");
+console.log("📁 Looking for frontend at:", frontendPath);
+console.log("📁 Frontend exists:", fs.existsSync(frontendPath));
+
 // Serve static files from frontend build
-app.use(express.static(path.join(__dirname, "../frontend/dist")));
+app.use(express.static(frontendPath));
 
 // Environment variables with fallbacks for local development
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/bulkmail";
@@ -175,7 +181,13 @@ app.get("/api/test-email", async (req, res) => {
 
 // Catch-all route - serve React app for any non-API routes
 app.get(/^\/(?!api).*/, (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
+  const indexPath = path.join(__dirname, "../frontend/dist/index.html");
+  if (fs.existsSync(indexPath)) {
+    res.sendFile(indexPath);
+  } else {
+    console.error("❌ index.html not found at:", indexPath);
+    res.status(500).send("Frontend not built. Please run: npm run build");
+  }
 });
 
 app.listen(PORT, () => {
