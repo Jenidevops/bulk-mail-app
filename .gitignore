@@ -1,0 +1,58 @@
+# Environment Variables
+.env
+.env.local
+.env.*.local
+backend/.env
+frontend/.env
+
+# Dependencies
+node_modules/
+frontend/node_modules/
+backend/node_modules/
+
+# Build files
+dist/
+build/
+frontend/dist/
+frontend/build/
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Database
+*.db
+*.sqlite
+data/
+
+# Package lock files (optional, but recommended to keep package-lock.json)
+# package-lock.json
+
+# Test coverage
+coverage/
+
+# Markdown files except README.md
+*.md
+!README.md
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# MongoDB data
+/data/db
