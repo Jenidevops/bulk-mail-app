@@ -1,7 +1,9 @@
-# Render Deployment Configuration
-
-# Build Command
-npm install && cd frontend && npm install && npm run build
-
-# Start Command
-node backend/index.js
+services:
+  - type: web
+    name: bulk-mail-app
+    env: node
+    buildCommand: npm install && cd frontend && npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
