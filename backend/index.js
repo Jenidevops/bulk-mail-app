@@ -173,11 +173,13 @@ app.get("/api/test-email", async (req, res) => {
   }
 });
 
-// Serve frontend for all non-API routes (MUST BE LAST)
-app.get("/*", (req, res) => {
+// Catch-all route - serve React app for any non-API routes
+app.get(/^\/(?!api).*/, (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`✅ Server is running on port ${PORT}`);
+  console.log(`✅ MongoDB Connected`);
+  console.log(`✅ Serving frontend from: ${path.join(__dirname, "../frontend/dist")}`);
 });
