@@ -144,7 +144,7 @@ app.get("/api/email-history", async (req, res) => {
   }
 });
 
-app.get("/test-email", async (req, res) => {
+app.get("/api/test-email", async (req, res) => {
   try {
     const info = await transporter.sendMail({
       from: `"Test Sender" <${EMAIL_USER}>`,
@@ -173,8 +173,8 @@ app.get("/test-email", async (req, res) => {
   }
 });
 
-// Serve frontend for all non-API routes
-app.get("*", (req, res) => {
+// Serve frontend for all non-API routes (MUST BE LAST)
+app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
 });
 
