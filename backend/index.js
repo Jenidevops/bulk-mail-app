@@ -4,11 +4,15 @@ const cors = require("cors");
 const nodemailer = require("nodemailer");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
+const path = require("path");
 const Email = require("./models/Email");
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+// Serve static files from frontend build
+app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
 // Environment variables with fallbacks for local development
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/bulkmail";
@@ -167,6 +171,11 @@ app.get("/test-email", async (req, res) => {
       error: error.message
     });
   }
+});
+
+// Serve frontend for all non-API routes
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
 });
 
 app.listen(PORT, () => {

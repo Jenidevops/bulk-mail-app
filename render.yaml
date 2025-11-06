@@ -1,0 +1,7 @@
+# Render Deployment Configuration
+
+# Build Command
+npm install && cd frontend && npm install && npm run build
+
+# Start Command
+node backend/index.js
