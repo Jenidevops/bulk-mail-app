@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from "react
 import SendEmail from "./components/SendEmail";
 import EmailHistory from "./components/EmailHistory";
 import Login from "./components/Login";
+import Footer from "./components/Footer";
 
 function NavBar({ isAuthenticated, setIsAuthenticated }) {
   const navigate = useNavigate();
@@ -51,16 +52,18 @@ function App() {
 
   return (
     <Router>
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-white flex flex-col">
         <NavBar isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
 
-        <main className="w-full">
+        <main className="flex-grow w-full">
           <Routes>
             <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
             <Route path="/" element={isAuthenticated ? <SendEmail /> : <Login setIsAuthenticated={setIsAuthenticated} />} />
             <Route path="/history" element={isAuthenticated ? <EmailHistory /> : <Login setIsAuthenticated={setIsAuthenticated} />} />
           </Routes>
         </main>
+
+        <Footer />
       </div>
     </Router>
   );
