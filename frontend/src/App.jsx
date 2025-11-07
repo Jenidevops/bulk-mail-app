@@ -53,7 +53,7 @@ function App() {
   return (
     <Router>
       <div className="min-h-screen bg-white flex flex-col">
-        <NavBar isAuthenticated={isAuthenticated} handleLogout={handleLogout} />
+        <NavBar isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
 
         <main className="w-full">
           <Routes>
