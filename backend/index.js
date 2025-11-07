@@ -43,10 +43,30 @@ const ADMIN_USERNAME = process.env.ADMIN_USERNAME || "admin";
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "admin123";
 const PORT = process.env.PORT || 3000;
 
-// MongoDB Connection
-mongoose.connect(MONGODB_URI)
-  .then(() => console.log("✅ MongoDB Connected"))
-  .catch(err => console.log("❌ MongoDB Error:", err));
+// MongoDB Connection with connection pooling for serverless
+let isConnected = false;
+
+const connectDB = async () => {
+  if (isConnected) {
+    console.log("Using existing MongoDB connection");
+    return;
+  }
+
+  try {
+    const db = await mongoose.connect(MONGODB_URI, {
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
+    });
+    isConnected = db.connections[0].readyState === 1;
+    console.log("✅ MongoDB Connected");
+  } catch (err) {
+    console.log("❌ MongoDB Error:", err);
+    throw err;
+  }
+};
+
+// Initialize connection
+connectDB().catch(err => console.error("Failed to connect to MongoDB:", err));
 
 const transporter = nodemailer.createTransport({
   host: EMAIL_HOST,
@@ -56,6 +76,14 @@ const transporter = nodemailer.createTransport({
     user: EMAIL_USER,
     pass: EMAIL_PASSWORD,
   },
+});
+
+// Middleware to ensure DB connection for each request
+app.use(async (req, res, next) => {
+  if (req.path.startsWith('/api')) {
+    await connectDB();
+  }
+  next();
 });
 
 // Middleware to verify JWT
@@ -202,8 +230,15 @@ app.get(/^\/(?!api).*/, (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`✅ Server is running on port ${PORT}`);
-  console.log(`✅ MongoDB Connected`);
-  console.log(`✅ Serving frontend from: ${path.join(__dirname, "../frontend/dist")}`);
-});
+// Export for Vercel serverless, but also support local development
+if (process.env.VERCEL) {
+  // Vercel serverless export
+  module.exports = app;
+} else {
+  // Local development server
+  app.listen(PORT, () => {
+    console.log(`✅ Server is running on port ${PORT}`);
+    console.log(`✅ MongoDB Connected`);
+    console.log(`✅ Serving frontend from: ${path.join(__dirname, "../frontend/dist")}`);
+  });
+}
