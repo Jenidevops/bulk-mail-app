@@ -100,8 +100,8 @@ function SendEmail() {
               value={formData.text}
               onChange={handleChange}
               required
-              rows="18"
-              className="w-full px-3 py-2 text-base border-0 focus:outline-none focus:ring-0 resize-none"
+              rows="8"
+              className="w-full px-3 py-2 text-base border-0 focus:outline-none focus:ring-0 resize-vertical"
               placeholder="Compose your email..."
             />
           </div>

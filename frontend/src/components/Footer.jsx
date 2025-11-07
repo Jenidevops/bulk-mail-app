@@ -10,35 +10,20 @@ function Footer() {
       setDateTime(new Date());
     }, 1000);
 
-    // Get user's location using IP geolocation with API key
+    // Get user's location using IP geolocation
     fetch('https://ipapi.co/json/')
-      .then(res => {
-        if (!res.ok) throw new Error('API error');
-        return res.json();
-      })
+      .then(res => res.json())
       .then(data => {
-        console.log('Location data:', data);
-        if (data.city && data.country_name) {
-          setLocation({
-            city: data.city,
-            country: data.country_name,
-            timezone: data.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone
-          });
-        } else {
-          // Fallback to generic location
-          setLocation({
-            city: 'Global',
-            country: 'Location',
-            timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
-          });
-        }
-      })
-      .catch(error => {
-        console.error('Location fetch error:', error);
-        // Fallback to generic location
         setLocation({
-          city: 'Global',
-          country: 'Location',
+          city: data.city || 'Unknown',
+          country: data.country_name || '',
+          timezone: data.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone
+        });
+      })
+      .catch(() => {
+        setLocation({
+          city: 'Location',
+          country: 'Unavailable',
           timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
         });
       });
