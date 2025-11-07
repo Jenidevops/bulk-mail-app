@@ -53,9 +53,9 @@ function App() {
   return (
     <Router>
       <div className="min-h-screen bg-white flex flex-col">
-        <NavBar isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
+        <NavBar isAuthenticated={isAuthenticated} handleLogout={handleLogout} />
 
-        <main className="flex-grow w-full">
+        <main className="w-full">
           <Routes>
             <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
             <Route path="/" element={isAuthenticated ? <SendEmail /> : <Login setIsAuthenticated={setIsAuthenticated} />} />

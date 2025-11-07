@@ -91,9 +91,9 @@ function Footer() {
         </div>
 
         {/* Developer Credit */}
-        <div className="text-center text-xs text-blue-200 mt-4 pt-4 border-t border-blue-500/30">
-          Developed with ❤️ by Jeni • Powered by MERN Stack
-        </div>
+          <div className="text-center text-sm opacity-90">
+            <p>Developer Credit ❤️ by Jenidevops • Powered by MERN Stack</p>
+          </div>
       </div>
     </footer>
   );
