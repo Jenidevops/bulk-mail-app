@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import API_URL from '../config';
 
 function EmailHistory() {
   const [emails, setEmails] = useState([]);
@@ -12,7 +13,7 @@ function EmailHistory() {
 
   const fetchHistory = async () => {
     try {
-      const response = await axios.get('/api/email-history');
+      const response = await axios.get(`${API_URL}/api/email-history`);
       setEmails(response.data);
       setLoading(false);
     } catch (err) {

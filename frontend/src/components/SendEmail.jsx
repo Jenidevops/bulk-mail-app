@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import API_URL from '../config';
 
 function SendEmail() {
   const [formData, setFormData] = useState({
@@ -28,7 +29,7 @@ function SendEmail() {
         return;
       }
 
-      const response = await axios.post('/api/send-bulk-email', {
+      const response = await axios.post(`${API_URL}/api/send-bulk-email`, {
         subject: formData.subject,
         text: formData.text,
         html: `<p>${formData.text.replace(/\n/g, '<br>')}</p>`,

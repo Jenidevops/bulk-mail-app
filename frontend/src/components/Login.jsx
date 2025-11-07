@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import API_URL from '../config';
 
 function Login({ setIsAuthenticated }) {
   const [credentials, setCredentials] = useState({ username: '', password: '' });
@@ -10,7 +11,7 @@ function Login({ setIsAuthenticated }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/login', credentials);
+      const response = await axios.post(`${API_URL}/api/login`, credentials);
       localStorage.setItem('token', response.data.token);
       setIsAuthenticated(true);
       navigate('/');
