@@ -46,7 +46,7 @@ function SendEmail() {
   };
 
   return (
-    <div className="min-h-screen bg-white px-4 py-6">
+    <div className="bg-white px-4 py-6">
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 max-w-5xl mx-auto">
         <h2 className="text-xl font-semibold mb-4 text-gray-800 border-b pb-3">
           New Message

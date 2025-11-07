@@ -21,7 +21,7 @@ function Login({ setIsAuthenticated }) {
   };
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-end px-20">
+    <div className="bg-white flex items-center justify-end px-20 py-12">
       <div className="w-full max-w-md">
         <div className="bg-white p-8">
         <h2 className="text-2xl font-normal mb-8 text-gray-800">
